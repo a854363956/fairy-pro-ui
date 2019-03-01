@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Input, InputNumber, Form } from 'antd';
+import { CustomGroupSelect } from '../CustomSelect/CustomSelect'
 
 const FormItem = Form.Item;
 
@@ -18,6 +19,13 @@ export class EditableCell extends Component {
     const { inputType } = this.props;
     if (inputType === 'number') {
       return <InputNumber />;
+    }
+    if(inputType === 'roleSelect'){
+      return (
+        <CustomGroupSelect 
+          url="/api/user/findGroupRoleSelect"
+        />
+      )
     }
     return <Input />;
   };
@@ -37,7 +45,7 @@ export class EditableCell extends Component {
                     rules: [
                       {
                         required: true,
-                        message: `Please Input ${title}!`,
+                        message: `请输入${title}...`,
                       },
                     ],
                     initialValue: record[dataIndex],

@@ -1,7 +1,9 @@
 export default {
-  'menu.baseModel': '基础信息模块',
-  'menu.permissionModule': '权限信息模块',
-  'menu.baseMenuUserManage': '人员资料维护',
+  'menu.baseModel': '基础模块',
+  'menu.permissionModule': '权限模块',
+  'menu.baseMenuUserManage': '人员维护',
+  'menu.baseMenuRoleManage': '角色维护',
+  'menu.baseMenuInfoManage': '菜单维护',
   'menu.exception-403': '403错误',
   'menu.exception-404': '404错误',
   'menu.exception-500': '500错误',

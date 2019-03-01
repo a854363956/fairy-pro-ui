@@ -15,7 +15,6 @@ function formatter(data, parentAuthority, parentName) {
       if (!item.name || !item.path) {
         return null;
       }
-
       let locale = 'menu';
       if (parentName) {
         locale = `${parentName}.${item.name}`;
@@ -108,12 +107,15 @@ const recursionMenu = (data, routesData) => {
         ...routesMenu[0],
         icon: menuData.icon,
         children: sRoutes,
+        key: menuData.name,
         exact: false,
       });
     } else {
       proxyRoute.push({
         ...menuData,
+        path: menuData.name,
         children: sRoutes,
+        locale: `menu.${menuData.name}`
       });
     }
   });

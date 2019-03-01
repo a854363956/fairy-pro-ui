@@ -4,6 +4,7 @@ import { connect } from 'dva';
 import { Card, Button } from 'antd';
 import TablePaging from '@/components/TablePaging/TablePaging';
 import FormJson from '@/components/FormJson/FormJson';
+import UserModal from './modals/UserModal'
 
 @connect(({ baseMenuUserManage }) => ({
   baseMenuUserManage,
@@ -16,6 +17,15 @@ class UserManagePage extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleModalInit = this.handleModalInit.bind(this);
+    this.handleTableInit = this.handleTableInit.bind(this);
+  }
+
+  handleModalInit(self){
+    this.modalSelf = self;
+  }
+  handleTableInit(self){
+    this.tableSelf = self;
   }
 
   handleSubmit(error, values) {
@@ -35,6 +45,7 @@ class UserManagePage extends Component {
 
   render() {
     const { filters } = this.state;
+    const self = this
     return (
       <Card>
         <FormJson
@@ -55,20 +66,36 @@ class UserManagePage extends Component {
             },
           ]}
           handleSubmit={this.handleSubmit}
-        >
-          <Button />
-        </FormJson>
+          buttons={[(
+            <Button
+             type="primary"
+             icon="user-add"
+             onClick={()=>{
+               self.modalSelf.show();
+             }}
+            >
+             添加用户
+            </Button>
+          )]}
+        />
         <TablePaging
           url="/api/user/findUserAll"
           edited
           rowKey={record => record.id}
-          onSave={(form, id) => {
-            form.validateFields((error, values) => {
-              console.log(values);
-              console.log(id);
-            });
-          }}
           filters={filters}
+          onInit={this.handleTableInit}
+          onSave={(form, id,table)=>{
+            debugger
+            self.props.dispatch({
+              type: 'baseMenuUserManage/updateUser',
+              payload: {
+                ...form,
+                id
+              },
+            }).then((bool)=>{
+              table.refresh();
+            })
+          }}
           columns={[
             {
               title: '登入名称',
@@ -85,28 +112,36 @@ class UserManagePage extends Component {
             {
               title: '身份证',
               dataIndex: 'identityCard',
-              editable: false,
+              editable: true,
               width: 250,
             },
             {
               title: '所属角色',
               dataIndex: 'roleName',
-              editable: false,
+              editable: true,
+              inputType:'roleSelect',
               width: 150,
             },
             {
               title: '邮箱地址',
               dataIndex: 'email',
-              editable: false,
+              editable: true,
               width: 250,
             },
             {
               title: '会话/分',
               dataIndex: 'onlineTime',
               width: 100,
-              editable: false,
+              inputType: 'number',
+              editable: true,
             },
           ]}
+        />
+        <UserModal
+          onInit={this.handleModalInit}
+          onOk={()=>{
+            self.tableSelf.refresh()
+          }}
         />
       </Card>
     );

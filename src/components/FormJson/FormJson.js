@@ -6,7 +6,7 @@ import { isFunction } from 'util';
 /**
  * 分页表格传入一个URL字符串即可
  */
-
+@Form.create()
 class FormJson extends Component {
   state = {};
 
@@ -41,8 +41,8 @@ class FormJson extends Component {
         </Form.Item>
       );
     });
-    buttons.forEach(item => {
-      proxyButtons.push(<Form.Item>{item}</Form.Item>);
+    ( buttons || []).forEach((item,i) => {
+      proxyButtons.push(<Form.Item key={i}>{item}</Form.Item>);
     });
 
     return (
@@ -53,7 +53,7 @@ class FormJson extends Component {
             查询
           </Button>
         </Form.Item>
-        {buttons}
+        {proxyButtons}
       </Form>
     );
   }
@@ -62,5 +62,4 @@ class FormJson extends Component {
     return <div>{this.renderFormComponent()}</div>;
   }
 }
-const WrappedFormJson = Form.create({ name: 'form_json' })(FormJson);
-export default WrappedFormJson;
+export default FormJson;

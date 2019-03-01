@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
+import { isNullOrUndefined } from 'util';
 import { urlToList } from '../_utils/pathTools';
 import { getMenuMatches } from './SiderMenuUtils';
 import { isUrl } from '@/utils/utils';
@@ -23,7 +24,7 @@ const getIcon = icon => {
   return icon;
 };
 
-export default class BaseMenu extends PureComponent {
+class BaseMenu extends PureComponent {
   /**
    * 获得菜单子节点
    * @memberof SiderMenu
@@ -125,24 +126,30 @@ export default class BaseMenu extends PureComponent {
       mode,
       location: { pathname },
       className,
-      collapsed,
+      collapsed
     } = this.props;
+
     // if pathname can't match, use the nearest parent's key
-    let selectedKeys = this.getSelectedMenuKeys(pathname);
+    let selectedKeys = this.getSelectedMenuKeys(pathname).filter((data)=> !isNullOrUndefined(data));
     if (!selectedKeys.length && openKeys) {
       selectedKeys = [openKeys[openKeys.length - 1]];
     }
     let props = {};
+    
     if (openKeys && !collapsed) {
+      
       props = {
         openKeys: openKeys.length === 0 ? [...selectedKeys] : openKeys,
       };
+      this.selfOpenKeys = props.openKeys
+    
     }
+
     const { handleOpenChange, style, menuData } = this.props;
     const cls = classNames(className, {
       'top-nav-menu': mode === 'horizontal',
     });
-
+    
     return (
       <Menu
         key="Menu"
@@ -159,3 +166,5 @@ export default class BaseMenu extends PureComponent {
     );
   }
 }
+
+export default BaseMenu

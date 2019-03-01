@@ -29,6 +29,10 @@ class TablePaging extends Component {
 
   componentDidMount() {
     this.refresh();
+    const { onInit } = this.props
+    if(onInit){
+      onInit(this)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,8 +96,8 @@ class TablePaging extends Component {
     }).then(responseText => {
       const { data } = responseText;
       const { paging } = self.state;
-      paging.total = data.total;
-      paging.pageNo = pageNo;
+      paging.total = parseInt(data.total);
+      paging.pageNo = parseInt(pageNo);
       self.setState({
         data: data.data,
         loading: false,
@@ -121,7 +125,7 @@ class TablePaging extends Component {
         ...col,
         onCell: record => ({
           record,
-          inputType: col.dataIndex === 'age' ? 'number' : 'text',
+          inputType: col.inputType,
           dataIndex: col.dataIndex,
           title: col.title,
           editing: this.isEditing(record),
@@ -144,8 +148,11 @@ class TablePaging extends Component {
                         // eslint-disable-next-line no-script-url
                         href="javascript:;"
                         onClick={() => {
-                          saveData(form, record.id, self);
-                          self.refresh();
+                          form.validateFields((err, values) => {
+                            saveData(values, record.id, self);
+                            self.refresh();
+                          });
+                          self.cancel()
                         }}
                         style={{ marginRight: 8 }}
                       >
