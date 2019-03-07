@@ -115,7 +115,7 @@ const recursionMenu = (data, routesData) => {
         ...menuData,
         path: menuData.name,
         children: sRoutes,
-        locale: `menu.${menuData.name}`
+        locale: `menu.${menuData.name}`,
       });
     }
   });

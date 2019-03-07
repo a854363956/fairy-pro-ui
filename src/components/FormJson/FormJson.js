@@ -41,7 +41,7 @@ class FormJson extends Component {
         </Form.Item>
       );
     });
-    ( buttons || []).forEach((item,i) => {
+    (buttons || []).forEach((item, i) => {
       proxyButtons.push(<Form.Item key={i}>{item}</Form.Item>);
     });
 

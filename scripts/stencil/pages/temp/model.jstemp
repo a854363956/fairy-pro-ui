@@ -1,0 +1,15 @@
+/* eslint-disable */
+import { message } from 'antd';
+// import {  } from './service';
+
+export default {
+  namespace: '${namespace}',
+
+  state: {
+  },
+
+  effects: {
+  },
+
+  reducers: {},
+};

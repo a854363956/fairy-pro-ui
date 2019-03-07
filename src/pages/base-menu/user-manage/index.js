@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { Card, Button } from 'antd';
 import TablePaging from '@/components/TablePaging/TablePaging';
 import FormJson from '@/components/FormJson/FormJson';
-import UserModal from './modals/UserModal'
+import UserModal from './modals/UserModal';
 
 @connect(({ baseMenuUserManage }) => ({
   baseMenuUserManage,
@@ -21,10 +21,10 @@ class UserManagePage extends Component {
     this.handleTableInit = this.handleTableInit.bind(this);
   }
 
-  handleModalInit(self){
+  handleModalInit(self) {
     this.modalSelf = self;
   }
-  handleTableInit(self){
+  handleTableInit(self) {
     this.tableSelf = self;
   }
 
@@ -45,7 +45,7 @@ class UserManagePage extends Component {
 
   render() {
     const { filters } = this.state;
-    const self = this
+    const self = this;
     return (
       <Card>
         <FormJson
@@ -66,17 +66,17 @@ class UserManagePage extends Component {
             },
           ]}
           handleSubmit={this.handleSubmit}
-          buttons={[(
+          buttons={[
             <Button
-             type="primary"
-             icon="user-add"
-             onClick={()=>{
-               self.modalSelf.show();
-             }}
+              type="primary"
+              icon="user-add"
+              onClick={() => {
+                self.modalSelf.show();
+              }}
             >
-             添加用户
-            </Button>
-          )]}
+              添加用户
+            </Button>,
+          ]}
         />
         <TablePaging
           url="/api/user/findUserAll"
@@ -84,17 +84,18 @@ class UserManagePage extends Component {
           rowKey={record => record.id}
           filters={filters}
           onInit={this.handleTableInit}
-          onSave={(form, id,table)=>{
-            debugger
-            self.props.dispatch({
-              type: 'baseMenuUserManage/updateUser',
-              payload: {
-                ...form,
-                id
-              },
-            }).then((bool)=>{
-              table.refresh();
-            })
+          onSave={(form, id, table) => {
+            self.props
+              .dispatch({
+                type: 'baseMenuUserManage/updateUser',
+                payload: {
+                  ...form,
+                  id,
+                },
+              })
+              .then(bool => {
+                table.refresh();
+              });
           }}
           columns={[
             {
@@ -119,7 +120,7 @@ class UserManagePage extends Component {
               title: '所属角色',
               dataIndex: 'roleName',
               editable: true,
-              inputType:'roleSelect',
+              inputType: 'roleSelect',
               width: 150,
             },
             {
@@ -139,8 +140,8 @@ class UserManagePage extends Component {
         />
         <UserModal
           onInit={this.handleModalInit}
-          onOk={()=>{
-            self.tableSelf.refresh()
+          onOk={() => {
+            self.tableSelf.refresh();
           }}
         />
       </Card>

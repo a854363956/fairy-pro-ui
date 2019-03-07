@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Input, InputNumber, Form } from 'antd';
-import { CustomGroupSelect } from '../CustomSelect/CustomSelect'
+import { CustomGroupSelect } from '@/components/CustomSelect/CustomSelect';
 
 const FormItem = Form.Item;
 
@@ -20,12 +20,8 @@ export class EditableCell extends Component {
     if (inputType === 'number') {
       return <InputNumber />;
     }
-    if(inputType === 'roleSelect'){
-      return (
-        <CustomGroupSelect 
-          url="/api/user/findGroupRoleSelect"
-        />
-      )
+    if (inputType === 'roleSelect') {
+      return <CustomGroupSelect url="/api/user/findGroupRoleSelect" />;
     }
     return <Input />;
   };

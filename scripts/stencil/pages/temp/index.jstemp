@@ -1,0 +1,26 @@
+/* eslint-disable */
+import React, { Component } from 'react';
+import { connect } from 'dva';
+
+@connect(({ ${namespace} }) => ({
+  ${namespace}
+}))
+class ${ComponentName} extends Component {
+  state = {
+  };
+
+  constructor() {
+    super();
+
+  }
+
+  render() {
+    return (
+      <div>
+
+      </div>
+    );
+  }
+}
+
+export default ${ComponentName};

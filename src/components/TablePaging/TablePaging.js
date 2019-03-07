@@ -29,9 +29,9 @@ class TablePaging extends Component {
 
   componentDidMount() {
     this.refresh();
-    const { onInit } = this.props
-    if(onInit){
-      onInit(this)
+    const { onInit } = this.props;
+    if (onInit) {
+      onInit(this);
     }
   }
 
@@ -152,7 +152,7 @@ class TablePaging extends Component {
                             saveData(values, record.id, self);
                             self.refresh();
                           });
-                          self.cancel()
+                          self.cancel();
                         }}
                         style={{ marginRight: 8 }}
                       >
